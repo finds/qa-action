@@ -5,6 +5,9 @@ inputs:
     description: 'Which label to apply to closed issues'
     required: true
     default: 'qa test'
+  token:  
+    description: 'Github token'
+    required: true
 outputs:
   message: 
     description: 'Info message'
