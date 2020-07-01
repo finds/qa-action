@@ -10,7 +10,7 @@ try {
   const payload = github.context.payload
   console.log(JSON.stringify(github.context.payload, undefined, 2))
   if (payload.action=="closed") {
-    let [owner, repo] = payload.issue.repository.full_name.split("/")
+    let [owner, repo] = payload.repository.full_name.split("/")
     github.issues.addLabels({
         owner,
         repo,
