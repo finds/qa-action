@@ -1,0 +1,13 @@
+name: 'QA Action'
+description: 'Marks any closed issues with a label'
+inputs:
+  label:  
+    description: 'Which label to apply to closed issues'
+    required: true
+    default: 'qa test'
+outputs:
+  message: 
+    description: 'Info message'
+runs:
+  using: 'node12'
+  main: 'index.js'
