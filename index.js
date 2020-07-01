@@ -3,13 +3,21 @@ const github = require('@actions/github');
 
 try {
   // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('label');
-  console.log(`Hello ${nameToGreet}!`);
+  const label = core.getInput('label');
   const time = (new Date()).toTimeString();
   core.setOutput("message", time);
   // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
+  const payload = github.context.payload
+  console.log(JSON.stringify(github.context.payload, undefined, 2))
+  if (payload.action=="closed") {
+    let [owner, repo] = payload.issue.repository.full_name.split("/")
+    github.issues.addLabels({
+        owner,
+        repo,
+        issue_number:payload.issue.number,
+        labels: [label]
+    })
+  }
 } catch (error) {
   core.setFailed(error.message);
 }
